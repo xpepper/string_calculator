@@ -3,9 +3,13 @@ class String
     delimiter = ","
     string_of_numbers = self
 
-    if start_with? "//"
-      delimiter = self[2,1]
-      string_of_numbers = self[4..-1]
+    if has_custom_delimiters?
+      matching_groups = scan(/\/\/(.+)\n(.+)/).flatten
+      delimiter, string_of_numbers = matching_groups
+      
+      if delimiter.start_with? "["
+        delimiter = delimiter[1..-2]
+      end
     end
 
     numbers = string_of_numbers.sub("\n", delimiter).split(delimiter).as_numbers
@@ -19,6 +23,11 @@ class String
     end
   end
 
+  private
+  
+  def has_custom_delimiters?
+    start_with? "//"
+  end
 end
 
 class Fixnum

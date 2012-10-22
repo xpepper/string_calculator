@@ -50,6 +50,16 @@ describe String do
       it { "1,1000,1001".addition.should == 1001 }
     end
 
+    context "support delimiters of any length" do
+      # Delimiters can be of any length with the following format: “//[delimiter]\n”
+      it { "//[***]\n1***2***3".addition.should == 6 }
+    end
+    
+    context "support multiple delimiters" do
+      # Allow multiple delimiters like this:  “//[delim1][delim2]\n”
+      xit { "//[*][%]\n1*2%3".addition.should == 6 }
+    end
+
   end
 
 end
